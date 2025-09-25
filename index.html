@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع LINK للحلول الطبية</title>
+    <!-- تضمين مكتبة Tailwind CSS للتصميم -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* إضافة خط مخصص */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body {
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* تأثيرات حركية إضافية للبطاقات */
+        .card-hover-effect:hover {
+            transform: translateY(-5px) scale(1.02);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* تأثيرات حركية على صور البورتفوليو */
+        .portfolio-image:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .modal {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-[#0082C8] text-white">
+
+    <!-- شريط التنقل (Navbar) -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- الشعار -->
+            <a href="#" class="flex items-center hover:opacity-80 transition-opacity">
+                <!-- صورة الشعار مدمجة مباشرة -->
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAA+iO5LAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0AdHc9xMAAAqJSURBVHhe7d2zcuRGEIBht7z/V68L79D3KxM6A/8n7i/wHvwB3/P/J35N163d7jYnI0k0n29kZCQwEBAQEBBPq1R2HwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AX2lAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0AdHc9xMAAAAeZktHAA/sP97YAAAAxElEQVR4Xu3ZMQEAAADCoPVP7Wl/CBYAAEDoB6cM5gAAgNAICgAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAAAICgAABAUAACA3g+QeYxO248h8AAAAASUVORK5CYII=" alt="لوجو LINK" class="w-10 h-10 ml-3 rounded-full">
+                <span class="text-xl font-bold">LINK</span>
+            </a>
+
+            <!-- زر قائمة الجوال -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+
+            <!-- روابط التنقل على الشاشات الكبيرة -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">من نحن</a>
+                <a href="#services" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">خدماتنا</a>
+                <a href="#portfolio" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">أعمالنا</a>
+                <a href="#contact" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">تواصل معنا</a>
+            </div>
+        </nav>
+
+        <!-- قائمة الجوال (مخفية بشكل افتراضي) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="#about" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">من نحن</a>
+            <a href="#services" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">خدماتنا</a>
+            <a href="#portfolio" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">أعمالنا</a>
+            <a href="#contact" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">تواصل معنا</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- قسم التعريف (Hero Section) -->
+        <section id="about" class="py-20 px-6">
+            <div class="container mx-auto text-center">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+                    نقدم حلولاً طبية متكاملة
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    من التطبيقات إلى أنظمة المؤسسات، نحن في <span class="text-white font-bold">LINK</span> نساعد المؤسسات الطبية على تحقيق أهدافها من خلال حلول تقنية مبتكرة وموثوقة.
+                </p>
+                <a href="#contact" class="inline-block bg-[#003D99] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#0082C8] transition-colors">
+                    اكتشف حلولنا
+                </a>
+            </div>
+        </section>
+
+        <!-- قسم الخدمات (Services Section) -->
+        <section id="services" class="py-20 px-6">
+            <div class="container mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-12">خدماتنا</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- بطاقة الخدمة 1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover-effect">
+                        <div class="text-5xl mb-4 text-[#0082C8]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122A2.992 2.992 001 7.121 21L3 21m9-3h1.007a3 3 0 012.122.879 2.992 2.992 001 7.121 21L21 21m-3-9h.007a3 3 0 01.879 2.122A2.992 2.992 001 7.121 21L21 21m0 0H7.5" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-[#003D99]">تطبيقات الهواتف الذكية</h3>
+                        <p class="text-gray-600">
+                            نصمم ونطور تطبيقات جوال مبتكرة لتسهيل التواصل بين الأطباء والمرضى، وإدارة المواعيد والسجلات الصحية.
+                        </p>
+                    </div>
+                    <!-- بطاقة الخدمة 2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover-effect">
+                        <div class="text-5xl mb-4 text-[#0082C8]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM12 3a1.5 1.5 0 011.5 1.5V6a1.5 1.5 0 01-3 0V4.5A1.5 1.5 0 0112 3zM15 10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-[#003D99]">أنظمة إدارة المستشفيات</h3>
+                        <p class="text-gray-600">
+                            حلول برمجية متكاملة لإدارة المستشفيات والعيادات، من الفواتير والتقارير إلى إدارة المخزون والموارد البشرية.
+                        </p>
+                    </div>
+                    <!-- بطاقة الخدمة 3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover-effect">
+                        <div class="text-5xl mb-4 text-[#0082C8]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5V3a1.5 1.5 0 013 0v1.5a1.5 1.5 0 01-3 0zM9 10.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-[#003D99]">استشارات تقنية</h3>
+                        <p class="text-gray-600">
+                            نقدم استشارات تقنية متخصصة للمساعدة في اختيار أفضل الحلول وتخطيط المشاريع لتحقيق أقصى استفادة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الأعمال السابقة (Portfolio) -->
+        <section id="portfolio" class="py-20 px-6">
+            <div class="container mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-12">أعمالنا السابقة</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- مشروع 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x400/003D99/FFFFFF?text=Project+1" alt="صورة مشروع 1" class="w-full h-48 object-cover portfolio-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#003D99] mb-2">تطبيق إدارة العيادات</h3>
+                            <p class="text-gray-600">
+                                تطبيق متكامل لإدارة بيانات المرضى، المواعيد، والفواتير للعيادات الصغيرة والمتوسطة.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- مشروع 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x400/00C896/FFFFFF?text=Project+2" alt="صورة مشروع 2" class="w-full h-48 object-cover portfolio-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#003D99] mb-2">منصة استشارات طبية عن بعد</h3>
+                            <p class="text-gray-600">
+                                منصة آمنة تسمح للمرضى بالتواصل مع الأطباء عبر الفيديو للحصول على استشارات طبية.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- مشروع 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x400/B6DFFF/000000?text=I-Care" alt="صورة مشروع 3" class="w-full h-48 object-cover portfolio-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#003D99] mb-2">نظام ادارة المراكز الطبية المتكامل </h3>
+                            <p class="text-gray-600">
+                                نظام لإدارة حجوزات المرضي والعيادات والدكاتره ومعامل التحليل و الاشاعه والممرضين .
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم التواصل (Contact Section) -->
+        <section id="contact" class="py-20 px-6">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">تواصل معنا</h2>
+                <p class="text-lg text-gray-300 mb-8 max-w-xl mx-auto">
+                    نحن دائماً على استعداد للإجابة على استفساراتك وتقديم المساعدة.
+                </p>
+                <!-- إضافة معلومات الاتصال هنا -->
+                <div class="flex flex-col items-center justify-center mb-8 text-lg md:text-xl md:flex-row md:space-x-8 md:space-x-reverse">
+                    <div class="flex items-center gap-2 mb-4 md:mb-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 4.238-7.5 11.25-7.5 11.25S4.5 14.738 4.5 10.5a7.5 7.5 0 0115 0z" />
+                        </svg>
+                        <span>مجمع الجوهرة، الرياض، السعودية</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-4 md:mb-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v8.25m0 0H2.25H21.75z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75V15m0-8.25H2.25M21.75 6.75H12M4.5 10.5h1.5m-1.5 4.5h1.5m-1.5 4.5h1.5" />
+                        </svg>
+                        <span>info@link.sa</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75v8.25m0 0H21.75H2.25z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75V15m0-8.25H2.25M21.75 6.75H12M4.5 10.5h1.5m-1.5 4.5h1.5m-1.5 4.5h1.5" />
+                        </svg>
+                        <span>+966-11-234-5678</span>
+                    </div>
+                </div>
+
+                <form class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="mb-6">
+                        <input type="text" placeholder="الاسم الكامل" class="w-full px-5 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0082C8] text-gray-800">
+                    </div>
+                    <div class="mb-6">
+                        <input type="email" placeholder="البريد الإلكتروني" class="w-full px-5 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0082C8] text-gray-800">
+                    </div>
+                    <div class="mb-6">
+                        <textarea placeholder="رسالتك" rows="4" class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#0082C8] text-gray-800"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-[#003D99] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#0082C8] transition-colors">
+                        إرسال الرسالة
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- تذييل الصفحة (Footer) -->
+    <footer class="bg-[#003D99] py-8 px-6 text-center shadow-inner text-white">
+        <div class="container mx-auto">
+            <p class="text-gray-300 text-sm">
+                جميع الحقوق محفوظة &copy; 2024
+                <a href="#" class="text-white hover:underline">LINK</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // سكريبت لإظهار وإخفاء قائمة الجوال
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
