@@ -3,243 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINK-ats</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Link Tech | حلول تقنية متكاملة للقطاع الطبي والخدمي</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* إضافة خط مخصص */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
+        :root {
+            --primary-color: #0052cc;
+            --secondary-color: #00d2ff;
+            --dark-bg: #0a192f;
+            --text-gray: #8892b0;
+        }
+
+        body { font-family: 'Cairo', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* Navigation */
+        .navbar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); transition: 0.4s; z-index: 1000; padding: 10px 0; }
+        .navbar-brand img { height: 120px; width: auto; transition: 0.3s; }
+        .navbar-brand img:hover { transform: scale(1.05); }
+        .nav-link { color: var(--dark-bg) !important; transition: 0.3s; }
+        .nav-link:hover { color: var(--primary-color) !important; }
+
+        /* Hero Section */
+        .hero {
+            height: 85vh;
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), 
+                        url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=2000&q=80');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; color: white;
+        }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; }
+        .hero span { color: var(--secondary-color); }
+
+        /* Quick Services Bar */
+        .services-bar { 
+            background: var(--dark-bg); color: white; padding: 30px 0; 
+            margin-top: -60px; border-radius: 15px; border-bottom: 4px solid var(--secondary-color);
+            position: relative; z-index: 10;
+        }
+
+        /* Tabs & Product Cards */
+        .nav-pills .nav-link { color: var(--dark-bg); font-weight: 700; border-radius: 50px; padding: 12px 30px; margin: 0 10px; border: 2px solid var(--primary-color); transition: 0.3s; }
+        .nav-pills .nav-link.active { background-color: var(--primary-color) !important; color: white !important; }
         
-        body {
-            font-family: 'Cairo', sans-serif;
-            scroll-behavior: smooth;
-        }
+        .product-card { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 30px; transition: 0.4s; height: 100%; cursor: pointer; text-align: center; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--secondary-color); }
+        
+        .badge-premium { padding: 5px 15px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; display: inline-block; }
+        .bg-bestseller { background: #f39c12; color: white; }
+        .bg-pro { background: #27ae60; color: white; }
+        .bg-service { background: #9b59b6; color: white; }
+        .bg-custom { background: var(--primary-color); color: white; }
 
-        /* تأثيرات حركية إضافية للبطاقات */
-        .card-hover-effect {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .card-hover-effect:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
+        /* Contact Section */
+        .contact-area { background: linear-gradient(135deg, #0a192f 0%, #0052cc 100%); color: white; padding: 100px 0; }
+        .contact-info-card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; height: 100%; border-right: 4px solid var(--secondary-color); }
+        .contact-info-item { display: flex; align-items: center; margin-bottom: 30px; }
+        .contact-info-item i { width: 50px; height: 50px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 20px; font-size: 1.3rem; flex-shrink: 0; }
+        
+        .form-control { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: white !important; padding: 12px; border-radius: 10px; }
+        .form-control:focus { background: rgba(255,255,255,0.15); border-color: var(--secondary-color); box-shadow: none; }
+        .form-control::placeholder { color: #8892b0; }
 
-        /* تأثيرات حركية على صور البورتفوليو */
-        .portfolio-image {
-            transition: transform 0.3s ease-in-out;
-        }
-        .portfolio-image:hover {
-            transform: scale(1.05);
-        }
+        /* Modal Customization */
+        .modal-content { border-radius: 20px; border: none; overflow: hidden; }
+        .modal-header { background: var(--primary-color); color: white; border: none; }
+        .modal-body { padding: 30px; }
+        .modal-body ul li { margin-bottom: 12px; font-size: 1.1rem; }
     </style>
 </head>
-<body class="bg-[#0082C8] text-white">
+<body>
 
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center hover:opacity-80 transition-opacity text-[#0082C8]">
-                <img 
-                     src="https://raw.githubusercontent.com/link-ats/I-Care1/main/download__4_-removebg-preview.png" 
-                     alt="شعار LINK-ATS" 
-                     class="w-12 h-12 ml-3"
-                > 
-                <span class="text-xl font-bold">LINK-ATS</span>
+    <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://raw.githubusercontent.com/link-ats/I-Care1/main/new%20logo%20.png" alt="Link Tech Logo">
             </a>
-
-            <button id="mobile-menu-button" class="md:hidden p-2 rounded-full text-gray-700 hover:bg-gray-100 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="hidden md:flex space-x-8 space-x-reverse">
-                <a href="#about" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">من نحن</a>
-                <a href="#services" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">خدماتنا</a>
-                <a href="#portfolio" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">أعمالنا</a>
-                <a href="#contact" class="text-gray-600 hover:text-[#0082C8] transition-colors font-semibold">تواصل معنا</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto fw-bold">
+                    <li class="nav-item"><a class="nav-link mx-2" href="#">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link mx-2" href="#solutions">حلولنا</a></li>
+                    <li class="nav-item"><a class="btn btn-primary ms-lg-4 px-4 rounded-pill text-white" href="#contact">تواصل معنا</a></li>
+                </ul>
             </div>
-        </nav>
-
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-            <a href="#about" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">من نحن</a>
-            <a href="#services" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">خدماتنا</a>
-            <a href="#portfolio" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">أعمالنا</a>
-            <a href="#contact" class="block py-3 px-6 text-gray-700 hover:bg-gray-100 transition-colors">تواصل معنا</a>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <section id="about" class="py-24 px-6">
-            <div class="container mx-auto text-center">
-                <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-4 leading-snug">
-                    نقدم حلولاً طبية <span class="text-[#003D99]">متكاملة</span>
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-                    من التطبيقات إلى أنظمة المؤسسات، نحن في <span class="text-white font-bold">LINK</span> نساعد المؤسسات الطبية على تحقيق أهدافها من خلال حلول تقنية مبتكرة وموثوقة.
-                </p>
-                <a href="#contact" class="inline-block bg-[#003D99] text-white font-bold py-3 px-10 rounded-full text-lg shadow-2xl hover:bg-white hover:text-[#003D99] transition-colors duration-300 transform hover:scale-105">
-                    اكتشف حلولنا الآن
-                </a>
-            </div>
-        </section>
-
-        <section id="services" class="py-20 px-6 bg-white">
-            <div class="container mx-auto">
-                <h2 class="text-3xl sm:text-4xl font-bold text-center text-[#003D99] mb-14">خدماتنا كشركة برمجيات </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="bg-gray-50 p-8 rounded-3xl shadow-lg card-hover-effect border-t-4 border-[#0082C8]">
-                        <div class="text-5xl mb-4 text-[#0082C8]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM12 3a1.5 1.5 0 011.5 1.5V6a1.5 1.5 0 01-3 0V4.5A1.5 1.5 0 0112 3zM15 10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM18 12a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM21 15a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM19.5 15a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-[#003D99]">تطوير أنظمة HIS و EHR</h3>
-                        <p class="text-gray-600">
-                            تطوير وتنفيذ أنظمة **إدارة المستشفيات (HIS)** والسجلات الصحية الإلكترونية **(EHR)** المصممة خصيصاً لتلبية احتياجات المراكز الطبية الكبيرة والمستشفيات.
-                        </p>
-                    </div>
-                    <div class="bg-gray-50 p-8 rounded-3xl shadow-lg card-hover-effect border-t-4 border-[#0082C8]">
-                        <div class="text-5xl mb-4 text-[#0082C8]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75A2.25 2.25 0 0015.75 1.5H13.5M12 7.5h.008v.008H12z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-[#003D99]">خدمات البرمجة المخصصة</h3>
-                        <p class="text-gray-600">
-                            نقدم خدمات برمجية متكاملة للعيادات والمراكز، بما في ذلك تطوير تطبيقات الجوال، الأنظمة السحابية، وواجهات برمجة التطبيقات (APIs) اللازمة للتكامل.
-                        </p>
-                    </div>
-                    <div class="bg-gray-50 p-8 rounded-3xl shadow-lg card-hover-effect border-t-4 border-[#0082C8]">
-                        <div class="text-5xl mb-4 text-[#0082C8]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 12H9.75M12 6.75V17.25" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15M6.75 12h10.5" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-[#003D99]">تكامل الأنظمة والدعم الفني</h3>
-                        <p class="text-gray-600">
-                            نضمن التشغيل السلس لحلولنا عبر تقديم الدعم الفني المستمر، وخدمات تكامل الأنظمة الحالية (مثل أجهزة المختبرات والأشعة) مع منتجاتنا.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="portfolio" class="py-20 px-6">
-            <div class="container mx-auto">
-                <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-12">أعمالنا ومنتجاتنا </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/003D99/FFFFFF?text=i-Care+Clinics" alt="صورة نظام i-Care لادارة العيادات" class="w-full h-48 object-cover portfolio-image">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#003D99] mb-2">نظام i-Care لإدارة العيادات</h3>
-                            <p class="text-gray-600">
-                                حل برمجي متكامل ومخصص لإدارة البيانات، المواعيد، والفواتير للعيادات الفردية بكفاءة عالية وسهولة في الاستخدام.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/00C896/FFFFFF?text=i-Care+Plus" alt="صورة نظام i-Care Plus لإدارة المراكز" class="w-full h-48 object-cover portfolio-image">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#003D99] mb-2">نظام i-Care Plus للمراكز الطبية</h3>
-                            <p class="text-gray-600">
-                                نظام متقدم لإدارة المراكز الطبية المتعددة، يشمل حجوزات المرضى، العيادات، الدكاترة، ومعامل التحليل والأشعة والممرضين.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <img src="https://placehold.co/600x400/B6DFFF/000000?text=Custom+Solutions" alt="صورة حلول برمجية مخصصة" class="w-full h-48 object-cover portfolio-image">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#003D99] mb-2">حلول تقنية مخصصة (Custom Development)</h3>
-                            <p class="text-gray-600">
-                                تطوير تطبيقات ومنصات طبية فريدة تلبي احتياجات العملاء الخاصة، وضمان التوافق مع المعايير الصحية المحلية والعالمية.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20 px-6 bg-[#003D99]">
-            <div class="container mx-auto text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">تواصل معنا</h2>
-                <p class="text-lg text-gray-300 mb-8 max-w-xl mx-auto">
-                    نحن دائماً على استعداد للإجابة على استفساراتك وبدء رحلة التحول الرقمي لمنشأتك الطبية.
-                </p>
-                <div class="flex flex-col items-center justify-center mb-10 text-lg md:text-xl md:flex-row md:space-x-8 md:space-x-reverse">
-                    
-                    <div class="flex items-center gap-2 mb-4 md:mb-0 hover:text-gray-200 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#0082C8]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 4.238-7.5 11.25-7.5 11.25S4.5 14.738 4.5 10.5a7.5 7.5 0 0115 0z" />
-                        </svg>
-                        <span>عبدالحميد لطفي، الجيزة، مصر</span>
-                    </div>
-
-                    <div class="flex items-center gap-2 mb-4 md:mb-0 hover:text-gray-200 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#0082C8]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v8.25m0 0H2.25H21.75z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75V15m0-8.25H2.25M21.75 6.75H12M4.5 10.5h1.5m-1.5 4.5h1.5m-1.5 4.5h1.5" />
-                        </svg>
-                        <a href="mailto:hello@lin-ats.com" class="hover:underline">hello@lin-ats.com</a>
-                        <a href="mailto:info@lin-ats.com" class="hover:underline">info@lin-ats.com</a>
-                    </div>
-                    
-                    <div class="flex items-center gap-2 hover:text-gray-200 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#0082C8]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75v8.25m0 0H21.75H2.25z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75V15m0-8.25H2.25M21.75 6.75H12M4.5 10.5h1.5m-1.5 4.5h1.5m-1.5 4.5h1.5" />
-                        </svg>
-                        <a href="tel:+01118387065" class="hover:underline">01118387065</a>
-                    </div>
-                </div>
-
-                <form class="max-w-xl mx-auto bg-white p-10 rounded-3xl shadow-2xl text-right">
-                    <div class="mb-6">
-                        <input type="text" placeholder="الاسم الكامل" class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#0082C8] focus:border-[#0082C8] text-gray-800" required>
-                    </div>
-                    <div class="mb-6">
-                        <input type="email" placeholder="البريد الإلكتروني" class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#0082C8] focus:border-[#0082C8] text-gray-800" required>
-                    </div>
-                    <div class="mb-6">
-                        <textarea placeholder="رسالتك" rows="5" class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#0082C8] focus:border-[#0082C8] text-gray-800" required></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-[#0082C8] text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-[#003D99] transition-colors duration-300 transform hover:scale-105">
-                        إرسال الرسالة
-                    </button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-gray-900 py-6 px-6 text-center text-white">
-        <div class="container mx-auto">
-            <p class="text-gray-400 text-sm">
-                جميع الحقوق محفوظة &copy; 2024
-                <a href="#" class="text-white hover:text-[#0082C8] transition-colors font-semibold">LINK</a>.
-            </p>
+    <section class="hero">
+        <div class="container" data-aos="fade-up">
+            <h1 class="mb-4">حلول برمجية <span>ذكية</span> لكل القطاعات</h1>
+            <p class="lead mb-5 opacity-75">من إدارة المستشفيات إلى أنظمة الشركات المتكاملة، نبني لك التكنولوجيا التي تستحقها لنمو عملك.</p>
+            <a href="#solutions" class="btn btn-primary btn-lg px-5 rounded-pill text-white shadow-lg">استكشف حلولنا</a>
         </div>
-    </footer>
+    </section>
 
+    <div class="container">
+        <div class="services-bar shadow-lg text-center" data-aos="zoom-in">
+            <div class="row g-0">
+                <div class="col-md-3 border-start border-secondary border-opacity-25">
+                    <i class="fas fa-shield-alt mb-2 text-info fs-3"></i>
+                    <h6 class="fw-bold">أمن سيبراني</h6>
+                    <p class="small mb-0 opacity-75">حماية مشفرة 100%</p>
+                </div>
+                <div class="col-md-3 border-start border-secondary border-opacity-25">
+                    <i class="fas fa-headset mb-2 text-info fs-3"></i>
+                    <h6 class="fw-bold">دعم 24/7</h6>
+                    <p class="small mb-0 opacity-75">مساعدة تقنية فورية</p>
+                </div>
+                <div class="col-md-3 border-start border-secondary border-opacity-25">
+                    <i class="fas fa-cloud mb-2 text-info fs-3"></i>
+                    <h6 class="fw-bold">أنظمة سحابية</h6>
+                    <p class="small mb-0 opacity-75">إدارة أعمالك عن بُعد</p>
+                </div>
+                <div class="col-md-3">
+                    <i class="fas fa-sync mb-2 text-info fs-3"></i>
+                    <h6 class="fw-bold">تحديثات مستمرة</h6>
+                    <p class="small mb-0 opacity-75">مواكبة دائم للتطور</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="solutions" class="py-5 mt-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">منتجاتنا وحلولنا البرمجية</h2>
+                <p class="text-muted">اختر القطاع الذي يناسب نشاطك للتعرف على حلولنا المتكاملة</p>
+                
+                <ul class="nav nav-pills justify-content-center mt-4" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#medical">القطاع الطبي</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#business">قطاع الشركات والخدمات</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="medical">
+                    <div class="row g-4">
+                        <div class="col-lg-4" data-aos="zoom-in">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalICare">
+                                <span class="badge-premium bg-bestseller">الأكثر مبيعاً</span>
+                                <h4 class="fw-bold">i-Care لإدارة العيادات</h4>
+                                <p class="text-muted small">إدارة المواعيد والمرضى والحسابات للعيادات الفردية.</p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalICarePlus">
+                                <span class="badge-premium bg-pro">الاحترافي</span>
+                                <h4 class="fw-bold">i-Care Plus للمراكز</h4>
+                                <p class="text-muted small">نظام متكامل للمجمعات الطبية، المعامل، والأشعة.</p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalHospital">
+                                <span class="badge-premium bg-custom">نظام كامل</span>
+                                <h4 class="fw-bold">إدارة المستشفيات (HIS)</h4>
+                                <p class="text-muted small">حلول شاملة لإدارة كافة أقسام المستشفى والعمليات.</p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="business">
+                    <div class="row g-4">
+                        <div class="col-lg-4">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalHR">
+                                <span class="badge-premium bg-service">HRMS</span>
+                                <h4 class="fw-bold">HRMS</h4>
+                                <p class="text-muted small">نظام متكامل لشؤون الموظفين، الرواتب، والبصمة.</p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalERP">
+                                <span class="badge-premium bg-pro">ERP-System</span>
+                                <h4 class="fw-bold">ERP & POS</h4>
+                                <p class="text-muted small">نظام محاسبي متطور لإدارة المبيعات والمخازن.</p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalCustom">
+                                <span class="badge-premium bg-custom">برمجتك</span>
+                                <h4 class="fw-bold">برمجيات مخصصة</h4>
+                                <p class="text-muted small">تطوير تطبيقات ومواقع مخصصة حسب متطلباتك.</p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-area">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold text-white">تواصل معنا الآن</h2>
+                <p class="text-gray">فريقنا جاهز للرد على استفساراتك في أي وقت</p>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-5" data-aos="fade-left">
+                    <div class="contact-info-card text-end">
+                        <h4 class="fw-bold mb-4 text-white">تواصل معنا </h4>
+                        
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <p class="mb-0 small text-gray">رقم الهاتف</p>
+                                <h5 class="mb-0 fw-bold">011/18387065</h5> 
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <p class="mb-0 small text-gray">البريد الإلكتروني</p>
+                                <h5 class="mb-0 fw-bold">info@lin-ats.com</h5>
+								<h5 class="mb-0 fw-bold">hello@lin-ats.com</h5>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <p class="mb-0 small text-gray">العنوان</p>
+                                <h5 class="mb-0 fw-bold">20 شارع الاعناب -المهندسين - الجيزة </h5>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <h6 class="text-gray mb-3">تابعنا على منصاتنا:</h6>
+                            <div class="d-flex gap-3 justify-content-start">
+                                <a href="#" class="text-white fs-3"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="text-white fs-3"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-white fs-3"><i class="fab fa-whatsapp text-success"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7" data-aos="fade-right">
+                    <form class="p-4" style="background: rgba(255,255,255,0.03); border-radius: 20px;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="الاسم">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="tel" class="form-control" placeholder="رقم الموبايل">
+                            </div>
+                            <div class="col-12">
+                                <select class="form-control">
+                                    <option>الخدمة المطلوبة...</option>
+                                    <option>نظام طبي</option>
+                                    <option>نظام إداري</option>
+                                    <option>تطوير موقع/تطبيق</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="5" placeholder="رسالتك أو تفاصيل مشروعك"></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button class="btn btn-primary w-100 py-3 rounded-pill fw-bold text-white">إرسال الطلب</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalICare" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header"><h5>i-Care لإدارة العيادات</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <ul>
+                        <li><i class="fas fa-check text-primary me-2"></i><b>إدارة المرضى:</b> سجل طبي إلكتروني كامل.</li>
+                        <li><i class="fas fa-check text-primary me-2"></i><b>المواعيد:</b> تنظيم الحجوزات مع تنبيهات تلقائية.</li>
+                        <li><i class="fas fa-check text-primary me-2"></i><b>الروشتة:</b> طباعة روشتات احترافية بضغطة زر.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalICarePlus" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success"><h5 class="text-white">i-Care Plus للمراكز الطبية</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <ul>
+                        <li><i class="fas fa-check text-success me-2"></i><b>المعمل والأشعة:</b> ربط كامل للنتائج بملف المريض.</li>
+                        <li><i class="fas fa-check text-success me-2"></i><b>تعدد العيادات:</b> إدارة أكثر من تخصص في نظام واحد.</li>
+                        <li><i class="fas fa-check text-success me-2"></i><b>المخازن:</b> متابعة المستهلكات الطبية بذكاء.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalHR" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #9b59b6;"><h5 class="text-white">نظام Link-HRMS</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <ul>
+                        <li><i class="fas fa-check text-purple me-2"></i><b>البصمة:</b> ربط مباشر مع أجهزة الحضور والانصراف.</li>
+                        <li><i class="fas fa-check text-purple me-2"></i><b>الرواتب:</b> حساب تلقائي للرواتب والخصومات.</li>
+                        <li><i class="fas fa-check text-purple me-2"></i><b>التقييم:</b> تقارير شهرية لأداء كل موظف.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // سكريبت لإظهار وإخفاء قائمة الجوال
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // إغلاق قائمة الجوال عند الضغط على أي رابط
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
+        AOS.init({ duration: 800, once: true });
     </script>
 </body>
 </html>
-
-
-
-
