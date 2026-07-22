@@ -3,33 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Tech | حلول تقنية متكاملة للقطاع الطبي والخدمي</title>
+    <title>Link-Tech | Integrated Tech Solutions | حلول تقنية متكاملة</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/link-ats/I-Care1/main/new%20logo%20.png">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <!-- Bootstrap CSS (Dynamically switched in JS) -->
+    <link id="bootstrap-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* دمج ألوان اللوجو كمتغيرات أساسية للموقع */
         :root {
-            --primary-color: #0052cc;
-            --secondary-color: #00d2ff;
+            /* الألوان الرئيسية */
+            --primary-color: #3787da;
+            --secondary-color: #1dd7c9;
             --dark-bg: #0a192f;
             --text-gray: #8892b0;
-            --light-blue: #f4f7fe;
+            --light-blue: #dff4f7;
+            
+            /* ألوان اللوجو الإضافية للتنويع */
+            --logo-cyan-bright: #0be8c9;
+            --logo-teal: #35b0ca;
+            --logo-blue-muted: #489acb;
+            --logo-blue-light: #a6d1e9;
+            --logo-cyan-light: #8deae4;
         }
 
-        body { font-family: 'Cairo', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        /* تعديل ألوان Bootstrap لتطابق اللوجو */
+        .text-primary { color: var(--primary-color) !important; }
+        .text-info { color: var(--secondary-color) !important; }
+        .text-secondary { color: var(--logo-blue-muted) !important; }
+        .bg-primary { background-color: var(--primary-color) !important; }
+        .bg-secondary { background-color: var(--logo-blue-muted) !important; }
+        .border-primary { border-color: var(--primary-color) !important; }
+        
+        .btn-primary { background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; color: #fff !important; }
+        .btn-primary:hover { background-color: #2b70b8 !important; border-color: #2b70b8 !important; }
+        
+        .btn-outline-primary { color: var(--primary-color) !important; border-color: var(--primary-color) !important; }
+        .btn-outline-primary:hover { background-color: var(--primary-color) !important; color: white !important; }
+        
+        .btn-outline-info { color: var(--secondary-color) !important; border-color: var(--secondary-color) !important; }
+        .btn-outline-info:hover { background-color: var(--secondary-color) !important; color: var(--dark-bg) !important; }
+
+        /* Language Switching CSS */
+        html[dir="rtl"] .lang-en { display: none !important; }
+        html[dir="ltr"] .lang-ar { display: none !important; }
+        
+        /* Font switching based on direction */
+        html[dir="rtl"] body { font-family: 'Cairo', sans-serif; }
+        html[dir="ltr"] body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+        body { overflow-x: hidden; scroll-behavior: smooth; }
 
         /* Navigation */
         .navbar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); transition: 0.4s; z-index: 1000; padding: 10px 0; }
         .navbar-brand img { height: 120px; width: auto; transition: 0.3s; }
-        .nav-link { color: var(--dark-bg) !important; transition: 0.3s; }
+        .nav-link { color: var(--dark-bg) !important; font-weight: 700; transition: 0.3s; }
         .nav-link:hover { color: var(--primary-color) !important; }
 
-        /* Hero Section Modified for Carousel Background */
+        /* Hero Section */
         .hero {
             height: 85vh;
             position: relative;
@@ -59,14 +95,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8));
+            /* تم تحويل #3787da إلى RGBA لتدرج احترافي */
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(55, 135, 218, 0.7));
         }
-        .hero .container {
-            position: relative;
-            z-index: 2;
-        }
-        .hero h1 { font-size: 3.5rem; font-weight: 900; }
-        .hero span { color: var(--secondary-color); }
+        .hero .container { position: relative; z-index: 2; }
+        .hero h1 { font-size: 3.8rem; font-weight: 900; line-height: 1.4; }
+        .hero h1 span { color: var(--secondary-color); }
 
         /* Quick Services Bar */
         .services-bar { 
@@ -74,76 +108,110 @@
             margin-top: -60px; border-radius: 15px; border-bottom: 4px solid var(--secondary-color);
             position: relative; z-index: 10;
         }
+        .services-border-end { border-inline-end: 1px solid rgba(255,255,255,0.1); }
+
+        /* About & Value Props Sections */
+        .about-section { background-color: white; padding: 80px 0; }
+        .about-img-grid img {
+            border: 6px solid var(--light-blue);
+            object-fit: cover;
+            width: 100%;
+            transition: transform 0.4s ease;
+        }
+        .about-img-grid img:hover {
+            transform: scale(1.03);
+            border-color: var(--secondary-color);
+        }
+
+        .value-prop-card { 
+            background: var(--light-blue); padding: 40px; border-radius: 20px; 
+            border-inline-end: 5px solid var(--primary-color); height: 100%; transition: 0.3s;
+        }
+        .value-prop-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(55, 135, 218, 0.15); }
+        .icon-box { 
+            width: 70px; height: 70px; background: white; border-radius: 15px; 
+            display: flex; align-items: center; justify-content: center; font-size: 2rem; 
+            color: var(--primary-color); margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
 
         /* Tabs & Product Cards */
-        .nav-pills .nav-link { color: var(--dark-bg); font-weight: 700; border-radius: 50px; padding: 12px 30px; margin: 0 10px; border: 2px solid var(--primary-color); transition: 0.3s; }
+        .nav-pills .nav-link { color: var(--dark-bg); font-weight: 700; border-radius: 50px; padding: 12px 30px; margin: 0 5px 10px 5px; border: 2px solid var(--primary-color); transition: 0.3s; }
         .nav-pills .nav-link.active { background-color: var(--primary-color) !important; color: white !important; }
         .product-card { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 30px; transition: 0.4s; height: 100%; cursor: pointer; text-align: center; }
         .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--secondary-color); }
         .badge-premium { padding: 5px 15px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; display: inline-block; }
-        .bg-bestseller { background: #f39c12; color: white; }
-        .bg-pro { background: #27ae60; color: white; }
+        
+        /* ألوان الشارات باستخدام باليتة اللوجو */
+        .bg-bestseller { background: var(--logo-teal); color: white; }
+        .bg-pro { background: var(--logo-cyan-bright); color: #0a192f; }
         .bg-custom { background: var(--primary-color); color: white; }
-        .bg-service { background: #e74c3c; color: white; }
-        .bg-erp { background: #8e44ad; color: white; }
+        .bg-service { background: var(--logo-blue-muted); color: white; }
+        .bg-erp { background: var(--secondary-color); color: #0a192f; }
+        .bg-host { background: var(--logo-blue-light); color: #0a192f; }
 
-        /* Modals styling tweaks */
+        /* Modals */
         .modal-content { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .modal-header { background: var(--dark-bg); color: white; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px; }
+        .modal-header { background: var(--dark-bg); color: white; padding: 20px; border-radius: 20px 20px 0 0; }
         .modal-header .btn-close { filter: invert(1); }
-        .modal-body ul { padding-right: 0; list-style: none; }
+        .modal-body ul { padding-inline-start: 0; list-style: none; }
         .modal-body li { margin-bottom: 15px; font-size: 0.95rem; display: flex; align-items: start; }
-        .modal-body li i { margin-left: 10px; margin-top: 5px; font-size: 1rem; }
+        .modal-body li i { margin-inline-end: 10px; margin-top: 5px; font-size: 1.1rem; }
 
         /* Portfolio Slider */
         .portfolio-section { background-color: var(--light-blue); padding: 90px 0; position: relative; }
         .testimonial-card {
             background: white; border-radius: 25px; padding: 50px 40px; margin: 10px auto; max-width: 850px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.05); border-right: 8px solid var(--primary-color); position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05); border-inline-end: 8px solid var(--primary-color); position: relative;
         }
         .doctor-icon-large {
             width: 80px; height: 80px; background: var(--light-blue); color: var(--primary-color);
             border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin-bottom: 25px;
         }
-        
         .carousel-control-prev, .carousel-control-next {
             width: 60px; height: 60px; background: var(--primary-color); border-radius: 50%;
             top: 50%; transform: translateY(-50%); opacity: 1; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .carousel-control-prev:hover, .carousel-control-next:hover { background: var(--secondary-color); scale: 1.1; }
-        .carousel-control-prev { right: -30px; left: auto; }
-        .carousel-control-next { left: -30px; right: auto; }
-        @media (max-width: 991px) {
-            .carousel-control-prev { right: 0; }
-            .carousel-control-next { left: 0; }
-            .testimonial-card { padding: 30px 20px; }
-        }
+        .carousel-control-prev:hover, .carousel-control-next:hover { background: var(--secondary-color); scale: 1.1; color: var(--dark-bg); }
 
         /* Contact Section */
-        .contact-area { background: linear-gradient(135deg, #0a192f 0%, #0052cc 100%); color: white; padding: 100px 0; }
-        .contact-info-card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; height: 100%; border-right: 4px solid var(--secondary-color); }
+        .contact-area { background: linear-gradient(135deg, #0a192f 0%, #3787da 100%); color: white; padding: 100px 0; }
+        .contact-info-card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; height: 100%; border-inline-end: 4px solid var(--secondary-color); }
         .contact-info-item { display: flex; align-items: center; margin-bottom: 30px; }
-        .contact-info-item i { width: 50px; height: 50px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 20px; font-size: 1.3rem; flex-shrink: 0; }
+        .contact-info-item i { width: 50px; height: 50px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-inline-end: 20px; font-size: 1.3rem; flex-shrink: 0; color: white;}
         .form-control { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: white !important; padding: 12px; border-radius: 10px; }
+        .form-control::placeholder { color: rgba(255,255,255,0.6); }
+        
+        .lang-btn { cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: bold; color: var(--primary-color); background: rgba(55, 135, 218, 0.1); padding: 8px 15px; border-radius: 50px; border: none; transition: 0.3s;}
+        .lang-btn:hover { background: var(--primary-color); color: white; }
     </style>
 </head>
 <body>
 
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#"><img src="https://raw.githubusercontent.com/link-ats/I-Care1/main/new%20logo%20.png" alt="Link Tech Logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto fw-bold">
-                    <li class="nav-item"><a class="nav-link mx-2" href="#">الرئيسية</a></li>
-                    <li class="nav-item"><a class="nav-link mx-2" href="#solutions">حلولنا</a></li>
-                    <li class="nav-item"><a class="nav-link mx-2" href="#portfolio">شركاؤنا</a></li>
-                    <li class="nav-item"><a class="btn btn-primary ms-lg-4 px-4 rounded-pill text-white" href="#contact">تواصل معنا</a></li>
+                <ul class="navbar-nav ms-auto fw-bold align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link mx-2" href="#"><span class="lang-ar">الرئيسية</span><span class="lang-en">Home</span></a></li>
+                    <li class="nav-item"><a class="nav-link mx-2" href="#about"><span class="lang-ar">من نحن</span><span class="lang-en">About Us</span></a></li>
+                    <li class="nav-item"><a class="nav-link mx-2" href="#solutions"><span class="lang-ar">خدماتنا وحلولنا</span><span class="lang-en">Solutions</span></a></li>
+                    <li class="nav-item"><a class="nav-link mx-2" href="#portfolio"><span class="lang-ar">شركاء النجاح</span><span class="lang-en">Partners</span></a></li>
+                    <li class="nav-item"><a class="btn btn-primary mx-lg-3 px-4 rounded-pill text-white shadow-sm" href="#contact"><span class="lang-ar">تواصل معنا</span><span class="lang-en">Contact Us</span></a></li>
+                    <li class="nav-item mt-3 mt-lg-0">
+                        <button onclick="toggleLang()" class="lang-btn mx-lg-2">
+                            <i class="fas fa-globe"></i>
+                            <span class="lang-ar">English</span>
+                            <span class="lang-en">عربي</span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
         <div id="heroSlider" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="3500" data-bs-pause="false">
             <div class="carousel-inner">
@@ -152,107 +220,286 @@
                 <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2000&q=80');"></div>
             </div>
         </div>
-
-        <div class="container" data-aos="fade-up">
-            <h1 class="mb-4">حلول برمجية <span>ذكية</span> لكل القطاعات</h1>
-            <p class="lead mb-5 opacity-75">من إدارة المستشفيات إلى أنظمة الشركات المتكاملة، نبني لك التكنولوجيا التي تستحقها.</p>
-            <a href="#solutions" class="btn btn-primary btn-lg px-5 rounded-pill text-white shadow-lg">استكشف حلولنا</a>
+        <div class="container text-center text-lg-start" data-aos="fade-up">
+            <h1 class="mb-4"> 
+                <span class="lang-ar">نصنع لك <span>واقع رقمي</span> وأنظمة تدير أعمالك بذكاء</span>
+                <span class="lang-en">We Build Your <span>Digital Reality</span> & Smart Systems</span>
+            </h1>
+            <p class="lead mb-5 opacity-75 fs-4 w-75 mx-auto mx-lg-0">
+                <span class="lang-ar">من الأنظمة الطبية المتطورة إلى تخطيط موارد الشركات (ERP) والسيرفرات الفائقة.. نحن شريكك التكنولوجي.</span>
+                <span class="lang-en">From Advanced Medical Systems to ERP and High-Performance Servers.. We are your reliable tech partner.</span>
+            </p>
+            <a href="#solutions" class="btn btn-primary btn-lg px-5 rounded-pill text-white shadow-lg fw-bold mx-1 mb-2">
+                <span class="lang-ar">اكتشف أنظمتنا</span><span class="lang-en">Explore Systems</span>
+            </a>
+            <a href="#about" class="btn btn-outline-info btn-lg px-5 rounded-pill fw-bold mx-1 mb-2">
+                <span class="lang-ar">تعرف علينا</span><span class="lang-en">About Us</span>
+            </a>
         </div>
     </section>
 
+    <!-- Quick Services -->
     <div class="container">
         <div class="services-bar shadow-lg text-center" data-aos="zoom-in">
             <div class="row g-0">
-                <div class="col-md-3 border-start border-secondary border-opacity-25">
+                <div class="col-md-3 services-border-end p-2">
                     <i class="fas fa-shield-alt mb-2 text-info fs-3"></i>
-                    <h6 class="fw-bold">أمن سيبراني</h6>
-                    <p class="small mb-0 opacity-75">حماية مشفرة 100%</p>
+                    <h6 class="fw-bold"><span class="lang-ar">أمن سيبراني قوي</span><span class="lang-en">Cyber Security</span></h6>
+                    <p class="small mb-0 opacity-75"><span class="lang-ar">حماية مشفرة لبيانات عملائك</span><span class="lang-en">Encrypted client data protection</span></p>
                 </div>
-                <div class="col-md-3 border-start border-secondary border-opacity-25">
+                <div class="col-md-3 services-border-end p-2">
                     <i class="fas fa-headset mb-2 text-info fs-3"></i>
-                    <h6 class="fw-bold">دعم 24/7</h6>
-                    <p class="small mb-0 opacity-75">مساعدة تقنية فورية</p>
+                    <h6 class="fw-bold"><span class="lang-ar">دعم فني 24/7</span><span class="lang-en">24/7 Tech Support</span></h6>
+                    <p class="small mb-0 opacity-75"><span class="lang-ar">معك دائماً لحل أي عقبة</span><span class="lang-en">Always here to assist you</span></p>
                 </div>
-                <div class="col-md-3 border-start border-secondary border-opacity-25">
-                    <i class="fas fa-cloud mb-2 text-info fs-3"></i>
-                    <h6 class="fw-bold">أنظمة سحابية</h6>
-                    <p class="small mb-0 opacity-75">إدارة أعمالك عن بُعد</p>
+                <div class="col-md-3 services-border-end p-2">
+                    <i class="fas fa-server mb-2 text-info fs-3"></i>
+                    <h6 class="fw-bold"><span class="lang-ar">استضافة وسيرفرات</span><span class="lang-en">Hosting & Servers</span></h6>
+                    <p class="small mb-0 opacity-75"><span class="lang-ar">أداء فائق بدون انقطاع</span><span class="lang-en">Maximum uptime & speed</span></p>
                 </div>
-                <div class="col-md-3">
-                    <i class="fas fa-sync mb-2 text-info fs-3"></i>
-                    <h6 class="fw-bold">تحديثات مستمرة</h6>
-                    <p class="small mb-0 opacity-75">مواكبة دائم للتطور</p>
+                <div class="col-md-3 p-2">
+                    <i class="fas fa-rocket mb-2 text-info fs-3"></i>
+                    <h6 class="fw-bold"><span class="lang-ar">أنظمة قابلة للتوسع</span><span class="lang-en">Scalable Systems</span></h6>
+                    <p class="small mb-0 opacity-75"><span class="lang-ar">تنمو مع نمو أعمالك</span><span class="lang-en">Grows exactly as your business grows</span></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <section id="solutions" class="py-5 mt-5">
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-up">
+                    <h6 class="text-primary fw-bold mb-2"><span class="lang-ar">من نحن؟</span><span class="lang-en">Who Are We?</span></h6>
+                    <h2 class="fw-bold mb-4">
+                        <span class="lang-ar">Link-ATS ليست مجرد شركة برمجة، بل <span class="text-primary">شريكك الإستراتيجي</span></span>
+                        <span class="lang-en">Link-ATS is not just a software company, but your <span class="text-primary">Strategic Partner</span></span>
+                    </h2>
+                    <p class="text-muted lead mb-4">
+                        <span class="lang-ar">نحن نتفهم أن التكنولوجيا وحدها لا تكفي، بل تحتاج إلى فهم عميق لطبيعة عملك. في لينك تك، نصنع البرمجيات التي تسد الفجوات في أعمالك وتضاعف أرباحك.</span>
+                        <span class="lang-en">We understand that technology alone is not enough; it needs a deep understanding of your business. We build software that fills gaps and multiplies your profits.</span>
+                    </p>
+                    
+                    <div class="d-flex mb-3">
+                        <i class="fas fa-bullseye text-secondary fs-4 mt-1 mx-3"></i>
+                        <div>
+                            <h5 class="fw-bold"><span class="lang-ar">لمن نقدم خدماتنا؟</span><span class="lang-en">Who do we serve?</span></h5>
+                            <p class="text-muted"><span class="lang-ar">نستهدف القطاع الطبي (مستشفيات، عيادات، مراكز)، والقطاع التجاري والخدمي لتقديم حلول تناسب حجم الكيان.</span><span class="lang-en">We target the medical sector (hospitals, clinics) and the commercial sector, providing solutions tailored to your scale.</span></p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <i class="fas fa-handshake text-secondary fs-4 mt-1 mx-3"></i>
+                        <div>
+                            <h5 class="fw-bold"><span class="lang-ar">كيف ندعم عملاءنا؟</span><span class="lang-en">How do we support our clients?</span></h5>
+                            <p class="text-muted"><span class="lang-ar">نوفر تدريباً كاملاً لموظفيك، وتحديثات دورية، ودعماً فنياً فورياً يضمن استمرار عملك دون توقف.</span><span class="lang-en">We provide full staff training, regular updates, and instant technical support ensuring your business never stops.</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 about-img-grid" data-aos="fade-up">
+                    <div class="row g-3">
+                        <div class="col-6 mt-4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="Servers & Network" class="rounded-4 shadow-lg mb-3" style="height: 200px;">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Coding" class="rounded-4 shadow-lg" style="height: 250px;">
+                        </div>
+                        <div class="col-6 d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Tech Office" class="rounded-4 shadow-lg" style="height: 380px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="py-5 bg-white">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">منتجاتنا وحلولنا البرمجية</h2>
-                <ul class="nav nav-pills justify-content-center mt-4" id="pills-tab">
-                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#medical">القطاع الطبي</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#business">القطاع الخدمي والشركات</button></li>
+                <h2 class="fw-bold">
+                    <span class="lang-ar">لماذا تحتاج إلى الارتقاء بأعمالك رقمياً؟</span>
+                    <span class="lang-en">Why Digitally Upgrade Your Business?</span>
+                </h2>
+                <p class="text-muted">
+                    <span class="lang-ar">الاستثمار الحقيقي ليس في المكاتب، بل في الأنظمة التي تدير هذه المكاتب.</span>
+                    <span class="lang-en">The real investment isn't in offices, but in the systems that manage them.</span>
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="value-prop-card">
+                        <div class="icon-box"><i class="fas fa-project-diagram"></i></div>
+                        <h4 class="fw-bold mb-3">
+                            <span class="lang-ar">لماذا تستخدم نظام ERP؟</span>
+                            <span class="lang-en">Why Use an ERP System?</span>
+                        </h4>
+                        <p class="text-muted mb-3">
+                            <span class="lang-ar">نظام ERP يجمع لك كل أقسام شركتك في مكان واحد:</span>
+                            <span class="lang-en">An ERP integrates all your company departments into one hub:</span>
+                        </p>
+                        <ul class="list-unstyled text-muted">
+                            <li class="mb-2"><i class="fas fa-check text-primary mx-2"></i> <strong class="lang-ar">قرار مبني على بيانات</strong><strong class="lang-en">Data-Driven Decisions</strong></li>
+                            <li class="mb-2"><i class="fas fa-check text-primary mx-2"></i> <strong class="lang-ar">منع الهدر والسرقات</strong><strong class="lang-en">Prevent Waste & Theft</strong></li>
+                            <li><i class="fas fa-check text-primary mx-2"></i> <strong class="lang-ar">أتمتة المهام الروتينية</strong><strong class="lang-en">Automate Routine Tasks</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="value-prop-card" style="border-inline-end-color: var(--secondary-color);">
+                        <div class="icon-box" style="color: var(--secondary-color);"><i class="fas fa-globe-americas"></i></div>
+                        <h4 class="fw-bold mb-3">
+                            <span class="lang-ar">لماذا تمتلك موقعاً إلكترونياً؟</span>
+                            <span class="lang-en">Why Own a Website?</span>
+                        </h4>
+                        <p class="text-muted mb-3">
+                            <span class="lang-ar">موقعك هو فرعك الرقمي الذي لا ينام أبداً:</span>
+                            <span class="lang-en">Your website is your digital branch that never sleeps:</span>
+                        </p>
+                        <ul class="list-unstyled text-muted">
+                            <li class="mb-2"><i class="fas fa-check text-info mx-2"></i> <strong class="lang-ar">المصداقية والثقة</strong><strong class="lang-en">Credibility & Trust</strong></li>
+                            <li class="mb-2"><i class="fas fa-check text-info mx-2"></i> <strong class="lang-ar">معرض أعمال دائم 24/7</strong><strong class="lang-en">24/7 Portfolio Display</strong></li>
+                            <li><i class="fas fa-check text-info mx-2"></i> <strong class="lang-ar">استهداف عملاء محلياً وعالمياً</strong><strong class="lang-en">Global & Local Targeting</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-5 mt-4" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">
+                    <span class="lang-ar">منتجاتنا وحلولنا البرمجية</span>
+                    <span class="lang-en">Our Software Solutions & Products</span>
+                </h2>
+                <ul class="nav nav-pills justify-content-center mt-4 flex-wrap" id="pills-tab">
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#medical"><span class="lang-ar">القطاع الطبي</span><span class="lang-en">Medical Sector</span></button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#business"><span class="lang-ar">الأنظمة (ERP)</span><span class="lang-en">ERP Systems</span></button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#web-hosting"><span class="lang-ar">الويب والاستضافة</span><span class="lang-en">Web & Hosting</span></button></li>
                 </ul>
             </div>
 
-            <div class="tab-content">
-                <!-- محتوى القطاع الطبي -->
+            <div class="tab-content mt-4">
+                <!-- 1. Medical -->
                 <div class="tab-pane fade show active" id="medical">
                     <div class="row g-4">
+                        <!-- iCare -->
                         <div class="col-lg-4">
                             <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalICare">
-                                <span class="badge-premium bg-bestseller">الأكثر مبيعاً</span>
-                                <h4 class="fw-bold">i-Care لإدارة العيادات</h4>
-                                <p class="text-muted small">نظام ذكي لإدارة الحجوزات، السجلات الطبية الإلكترونية للمرضى، والروشتة المطبوعة وحسابات العيادة الفردية بسلاسة تامة.</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3">قراءة التفاصيل</button>
+                                <span class="badge-premium bg-bestseller"><span class="lang-ar">الأكثر مبيعاً</span><span class="lang-en">Best Seller</span></span>
+                                <h4 class="fw-bold"><span class="lang-ar">i-Care لإدارة العيادات</span><span class="lang-en">i-Care Clinics</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">نظام ذكي لإدارة الحجوزات، السجلات الطبية الإلكترونية، والروشتة المطبوعة وحسابات العيادة.</span>
+                                    <span class="lang-en">Smart system for booking management, EMR, printed prescriptions, and clinic accounting.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
                             </div>
                         </div>
+                        <!-- iCare Plus -->
                         <div class="col-lg-4">
                             <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalICarePlus">
-                                <span class="badge-premium bg-pro">الاحترافي</span>
-                                <h4 class="fw-bold">i-Care Plus للمراكز</h4>
-                                <p class="text-muted small">نظام متكامل للمراكز الطبية والمجمعات؛ يربط الاستقبال بالعيادات، مع إدارة كاملة لمعامل التحاليل ومراكز الأشعة والحسابات المشتركة.</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3">قراءة التفاصيل</button>
+                                <span class="badge-premium bg-pro"><span class="lang-ar">الاحترافي</span><span class="lang-en">Professional</span></span>
+                                <h4 class="fw-bold"><span class="lang-ar">i-Care Plus للمراكز</span><span class="lang-en">i-Care Plus Centers</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">نظام متكامل يربط الاستقبال بالعيادات، وإدارة كاملة لمعامل التحاليل وحسابات الأطباء المتشابكة.</span>
+                                    <span class="lang-en">Integrated system linking reception with clinics, managing labs, and complex doctor commissions.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
                             </div>
                         </div>
+                        <!-- HIS -->
                         <div class="col-lg-4">
                             <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalHIS">
                                 <span class="badge-premium bg-custom">HIS Systems</span>
-                                <h4 class="fw-bold">إدارة المستشفيات الشاملة</h4>
-                                <p class="text-muted small">منظومة ERP طبية متكاملة للتحكم في غرف العمليات، الأقسام الداخلية، الرعاية المركزة، الطوارئ، الصيدلية الداخلية والمخازن الطبية الضخمة.</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">قراءة التفاصيل</button>
+                                <h4 class="fw-bold"><span class="lang-ar">إدارة المستشفيات الشاملة</span><span class="lang-en">Hospital Management</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">منظومة ERP طبية متكاملة للتحكم في غرف العمليات، الرعاية، الطوارئ، الصيدلية الداخلية والمخازن.</span>
+                                    <span class="lang-en">Complete Medical ERP to control operation rooms, ICU, ER, inpatient pharmacy, and inventory.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- محتوى القطاع الخدمي والشركات -->
+                <!-- 2. ERP -->
                 <div class="tab-pane fade" id="business">
-                    <div class="row g-4">
+                    <div class="row g-4 justify-content-center">
+                        <!-- POS -->
                         <div class="col-lg-4">
                             <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalStores">
-                                <span class="badge-premium bg-service">أنظمة إدارية للمحلات والشركات</span>
-                                <h4 class="fw-bold">نظام إدارة المبيعات والمخازن</h4>
-                                <p class="text-muted small">إدارة شاملة لعمليات البيع والشراء، الفواتير، جرد المخازن التلقائي، حسابات الموردين والعملاء، وتقارير الأرباح والخسائر الدورية.</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3">قراءة التفاصيل</button>
+                                <span class="badge-premium bg-service"><span class="lang-ar">للمحلات والشركات</span><span class="lang-en">Retail & Business</span></span>
+                                <h4 class="fw-bold"><span class="lang-ar">إدارة المبيعات والمخازن</span><span class="lang-en">POS & Inventory</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">إدارة شاملة للمبيعات (POS)، جرد المخازن التلقائي، وحسابات الموردين والعملاء.</span>
+                                    <span class="lang-en">Comprehensive POS management, automated inventory checking, suppliers, and client accounts.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
                             </div>
                         </div>
+                        <!-- ERP -->
                         <div class="col-lg-4">
                             <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalERP">
                                 <span class="badge-premium bg-erp">ERP Systems</span>
-                                <h4 class="fw-bold">حلول ERP المتكاملة للشركات</h4>
-                                <p class="text-muted small">أنظمة سحابية متطورة لربط كافة أقسام شركتك (الحسابات العامة، الموارد البشرية HR، الأصول الثابتة، المشتريات، وإدارة علاقات العملاء CRM).</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3">قراءة التفاصيل</button>
+                                <h4 class="fw-bold"><span class="lang-ar">حلول ERP المتكاملة</span><span class="lang-en">Complete ERP Solutions</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">أنظمة سحابية لربط أقسام شركتك: الحسابات، الموارد البشرية (HR)، المشتريات، والـ CRM.</span>
+                                    <span class="lang-en">Cloud systems to link accounting, HR, procurement, and CRM departments together.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
                             </div>
                         </div>
+                        <!-- Custom -->
                         <div class="col-lg-4">
                             <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalCustom">
                                 <span class="badge-premium bg-custom">Custom Tech</span>
-                                <h4 class="fw-bold">الحلول والبرمجيات المخصصة</h4>
-                                <p class="text-muted small">نصمم ونطور تطبيقات ومواقع الويب والأنظمة البرمجية الخاصة والموجهة لخدمة فكر ونشاط شركتك الداخلي لتلبية أدق المتطلبات الخدمية والتجارية.</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3">قراءة التفاصيل</button>
+                                <h4 class="fw-bold"><span class="lang-ar">البرمجيات المخصصة</span><span class="lang-en">Custom Software</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">نصمم أنظمة برمجية خاصة وتطبيقات موجهة لخدمة فكر ونشاط شركتك لتلبية أدق متطلباتك.</span>
+                                    <span class="lang-en">We design tailor-made software systems and applications to fit your exact business needs.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Web & Hosting -->
+                <div class="tab-pane fade" id="web-hosting">
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-lg-4">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalWebDev">
+                                <span class="badge-premium bg-primary"><span class="lang-ar">تصميم المواقع</span><span class="lang-en">Web Design</span></span>
+                                <h4 class="fw-bold"><span class="lang-ar">برمجة مواقع الشركات</span><span class="lang-en">Corporate Websites</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">تصميم عصري وجذاب لموقع شركتك، مهيأ لمحركات البحث (SEO) ومتجاوب مع كافة الشاشات.</span>
+                                    <span class="lang-en">Modern, responsive, and SEO-optimized website designs that reflect your brand identity.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalServers">
+                                <span class="badge-premium bg-host">Servers & Cloud</span>
+                                <h4 class="fw-bold"><span class="lang-ar">السيرفرات والاستضافة</span><span class="lang-en">Servers & Hosting</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">سيرفرات فائقة (VPS/Dedicated) لاستضافة أنظمتك مع حماية مستمرة وعمل بنسبة 99.9%.</span>
+                                    <span class="lang-en">High-performance servers (VPS/Dedicated) with advanced DDoS protection and 99.9% uptime.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="product-card" data-bs-toggle="modal" data-bs-target="#modalDomains">
+                                <span class="badge-premium bg-secondary"><span class="lang-ar">النطاقات</span><span class="lang-en">Domains</span></span>
+                                <h4 class="fw-bold"><span class="lang-ar">النطاقات والبريد الرسمي</span><span class="lang-en">Domains & Work Emails</span></h4>
+                                <p class="text-muted small">
+                                    <span class="lang-ar">حجز أسماء النطاقات وإنشاء إيميلات عمل رسمية باسم شركتك لتعزيز احترافيتك.</span>
+                                    <span class="lang-en">Domain registration and official business emails creation to enhance your corporate image.</span>
+                                </p>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill mt-3"><span class="lang-ar">قراءة التفاصيل</span><span class="lang-en">Read Details</span></button>
                             </div>
                         </div>
                     </div>
@@ -261,59 +508,66 @@
         </div>
     </section>
 
-    <!-- ==================== المودالات التفصيلية لجميع الخدمات ==================== -->
+    <!-- ==================== Modals ==================== -->
     
-    <!-- 1. مودال i-Care للعيادات -->
+    <!-- 1. modalICare -->
     <div class="modal fade" id="modalICare" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header"><h5>i-Care لإدارة العيادات الفردية</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header">
+                    <h5><span class="lang-ar">i-Care للعيادات الفردية</span><span class="lang-en">i-Care For Individual Clinics</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <ul>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>الملف الإلكتروني:</b> تاريخ مرضي كامل لكل عميل يشمل الأشعات والتحاليل والزيارات السابقة.</span></li>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>الروشتة الذكية:</b> كتابة وطباعة الروشتة في ثوانٍ مع حفظ بروتوكولات الأدوية الجاهزة.</span></li>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>تنظيم الحجوزات:</b> استقبال ذكي، تنظيم الانتظار، وإرسال تأكيدات للمرضى.</span></li>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>تقارير مالية:</b> حساب إيرادات العيادة، ومصروفاتها يومياً وشهرياً بشكل مبسط.</span></li>
+                        <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>الملف الإلكتروني:</b> تاريخ مرضي كامل لكل عميل.</span><span class="lang-en"><b>EMR:</b> Complete medical history for each patient.</span></li>
+                        <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>الروشتة الذكية:</b> كتابة وطباعة سريعة مع بروتوكولات الأدوية.</span><span class="lang-en"><b>Smart e-Prescription:</b> Fast printing with saved protocols.</span></li>
+                        <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>تقارير مالية:</b> حساب إيرادات العيادة بضغطة زر.</span><span class="lang-en"><b>Financial Reports:</b> Calculate daily clinic revenue instantly.</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- 2. مودال i-Care Plus للمراكز -->
+    
+    <!-- 2. modalICarePlus -->
     <div class="modal fade" id="modalICarePlus" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header"><h5>i-Care Plus للمراكز والمجمعات الطبية</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header">
+                    <h5><span class="lang-ar">i-Care Plus للمراكز الطبية</span><span class="lang-en">i-Care Plus PolyClinics</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <ul>
-                        <li><i class="fas fa-check-circle text-success"></i> <span><b>ربط العيادات:</b> شاشة استقبال مركزية توزع المرضى على مختلف التخصصات والعيادات تلقائياً.</span></li>
-                        <li><i class="fas fa-check-circle text-success"></i> <span><b>إدارة المعامل والأشعة:</b> استقبال الطلبات، تسجيل النتائج، وطباعة التقارير الطبية المخصصة.</span></li>
-                        <li><i class="fas fa-check-circle text-success"></i> <span><b>حسابات الأطباء المتطورة:</b> حساب نسب الأطباء والاستشاريين بدقة وتلقائية تامة وفقاً لكل كشف أو إجراء.</span></li>
-                        <li><i class="fas fa-check-circle text-success"></i> <span><b>صلاحيات المستخدمين:</b> نظام أمان قوي يتيح تحديد صلاحيات مخصصة لكل موظف استقبال، ممرض، أو محاسب.</span></li>
+                        <li><i class="fas fa-check-circle" style="color: var(--logo-cyan-bright);"></i> <span class="lang-ar"><b>ربط شامل:</b> شاشة استقبال توزع المرضى للعيادات والمعامل.</span><span class="lang-en"><b>Total Linking:</b> Reception screen directs patients to clinics/labs.</span></li>
+                        <li><i class="fas fa-check-circle" style="color: var(--logo-cyan-bright);"></i> <span class="lang-ar"><b>حسابات الأطباء:</b> حساب نسب الأطباء الاستشاريين تلقائياً.</span><span class="lang-en"><b>Doctor Accounting:</b> Auto-calculate doctor/consultant commission rates.</span></li>
+                        <li><i class="fas fa-check-circle" style="color: var(--logo-cyan-bright);"></i> <span class="lang-ar"><b>صلاحيات قوية:</b> تحديد وصول محدد لكل مستخدم.</span><span class="lang-en"><b>Strong Permissions:</b> Strict access levels for different staff roles.</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 3. مودال إدارة المستشفيات HIS -->
+    <!-- 3. modalHIS -->
     <div class="modal fade" id="modalHIS" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header"><h5>HIS Systems | منظومة المستشفيات المتكاملة</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header">
+                    <h5><span class="lang-ar">HIS منظومة المستشفيات</span><span class="lang-en">HIS Systems For Hospitals</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <div class="row">
                         <div class="col-md-6">
                             <ul>
-                                <li><i class="fas fa-check-circle text-primary"></i> <span><b>الأقسام الداخلية والطوارئ:</b> إدارة الأسرة، الرعاية المركزة، وتتبع العمليات الجراحية.</span></li>
-                                <li><i class="fas fa-check-circle text-primary"></i> <span><b>الصيدلية والمخازن:</b> الربط بين الصيدلية الداخلية والمخازن الدوائية لضمان الجرد الفوري ومنع الهدر.</span></li>
+                                <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>الأقسام الداخلية:</b> إدارة الأسرة والعمليات.</span><span class="lang-en"><b>Inpatient Wards:</b> Manage beds, ICU and Operations.</span></li>
+                                <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>الصيدلية والمخازن:</b> ربط الصيدلية بالمخازن لمنع الهدر.</span><span class="lang-en"><b>Pharmacy & Inventory:</b> Linked to prevent medicine waste.</span></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul>
-                                <li><i class="fas fa-check-circle text-primary"></i> <span><b>شركات التأمين:</b> إدارة كاملة لعقود التأمين الطبي، الخصومات، والمطالبات المالية المعقدة.</span></li>
-                                <li><i class="fas fa-check-circle text-primary"></i> <span><b>لوحة تحكم الإدارة العليا:</b> تقارير إحصائية وبيانات حية حول كفاءة تشغيل المستشفى مالياً وطبياً.</span></li>
+                                <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>شركات التأمين:</b> إدارة المطالبات والخصومات.</span><span class="lang-en"><b>Insurance:</b> Manage contracts, discounts and claims.</span></li>
+                                <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>لوحة الإدارة:</b> تقارير حول كفاءة تشغيل المستشفى.</span><span class="lang-en"><b>Admin Dashboard:</b> Live reports on hospital efficiency.</span></li>
                             </ul>
                         </div>
                     </div>
@@ -322,40 +576,45 @@
         </div>
     </div>
 
-    <!-- 4. مودال نظام إدارة المبيعات والمخازن -->
+    <!-- 4. modalStores -->
     <div class="modal fade" id="modalStores" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header" style="background: #e74c3c;"><h5>نظام إدارة المبيعات، الحسابات والمخازن</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header" style="background: var(--logo-teal);">
+                    <h5><span class="lang-ar">إدارة المبيعات والمخازن</span><span class="lang-en">Sales & Inventory Management</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <ul>
-                        <li><i class="fas fa-check-circle" style="color: #e74c3c;"></i> <span><b>نقاط البيع السريعة POS:</b> كاشير مرن يدعم الباركود وطباعة الفواتير الفورية للمحلات والأنشطة التجارية.</span></li>
-                        <li><i class="fas fa-check-circle" style="color: #e74c3c;"></i> <span><b>الجرد التلقائي:</b> مراقبة المخزون، وتنبيهات أوتوماتيكية عند اقتراب انتهاء كمية أي منتج.</span></li>
-                        <li><i class="fas fa-check-circle" style="color: #e74c3c;"></i> <span><b>العملاء والموردين:</b> تسجيل مديونيات وحسابات الموردين والأقساط ومستحقات العملاء بدقة.</span></li>
-                        <li><i class="fas fa-check-circle" style="color: #e74c3c;"></i> <span><b>الخزائن والبنوك:</b> تتبع حركة النقدية اليومية داخل الصناديق المتعددة أو الحسابات البنكية.</span></li>
+                        <li><i class="fas fa-check-circle" style="color: var(--logo-teal);"></i> <span class="lang-ar"><b>كاشير POS:</b> نقاط بيع سريعة تدعم الباركود.</span><span class="lang-en"><b>POS Cashier:</b> Fast barcode-supported point of sales.</span></li>
+                        <li><i class="fas fa-check-circle" style="color: var(--logo-teal);"></i> <span class="lang-ar"><b>الجرد التلقائي:</b> مراقبة المخزون وتنبيهات النواقص.</span><span class="lang-en"><b>Auto-Inventory:</b> Stock tracking and shortage alerts.</span></li>
+                        <li><i class="fas fa-check-circle" style="color: var(--logo-teal);"></i> <span class="lang-ar"><b>الخزائن والبنوك:</b> تتبع النقدية اليومية بالصناديق.</span><span class="lang-en"><b>Treasury & Banks:</b> Daily cash flow tracking across vaults.</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. مودال أنظمة ERP للشركات -->
+    <!-- 5. modalERP -->
     <div class="modal fade" id="modalERP" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="background: #8e44ad;"><h5>ERP Systems | الحلول المتكاملة للشركات</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header" style="background: var(--logo-blue-muted);">
+                    <h5><span class="lang-ar">ERP Systems المتكامل</span><span class="lang-en">Integrated ERP Systems</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <div class="row">
                         <div class="col-md-6">
                             <ul>
-                                <li><i class="fas fa-check-circle" style="color: #8e44ad;"></i> <span><b>الحسابات العامة والدورة المستندية:</b> قيود يومية، ميزان المراجعة، شجرة حسابات متكاملة، وقوائم مالية ختامية.</span></li>
-                                <li><i class="fas fa-check-circle" style="color: #8e44ad;"></i> <span><b>الموارد البشرية HR:</b> إدارة شؤون الموظفين، الرواتب، الغياب والحضور، والمكافآت والجزاءات.</span></li>
+                                <li><i class="fas fa-check-circle" style="color: var(--logo-blue-muted);"></i> <span class="lang-ar"><b>الحسابات العامة:</b> قوائم مالية ختامية وميزان.</span><span class="lang-en"><b>General Accounts:</b> Balance sheets and final statements.</span></li>
+                                <li><i class="fas fa-check-circle" style="color: var(--logo-blue-muted);"></i> <span class="lang-ar"><b>الموارد البشرية HR:</b> شؤون موظفين ورواتب.</span><span class="lang-en"><b>HR Management:</b> Payroll, attendance, and employee data.</span></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul>
-                                <li><i class="fas fa-check-circle" style="color: #8e44ad;"></i> <span><b>إدارة علاقات العملاء CRM:</b> متابعة العملاء المحتملين، العروض السعرية، وخدمات ما بعد البيع.</span></li>
-                                <li><i class="fas fa-check-circle" style="color: #8e44ad;"></i> <span><b>النظام السحابي:</b> وصول آمن لبيانات شركتك وفروعك من أي مكان وفي أي وقت عبر السحابة الذكية.</span></li>
+                                <li><i class="fas fa-check-circle" style="color: var(--logo-blue-muted);"></i> <span class="lang-ar"><b>إدارة العملاء CRM:</b> تتبع العروض وخدمات البيع.</span><span class="lang-en"><b>CRM:</b> Track quotations and post-sale services.</span></li>
+                                <li><i class="fas fa-check-circle" style="color: var(--logo-blue-muted);"></i> <span class="lang-ar"><b>نظام سحابي:</b> وصول آمن لفروعك من أي مكان.</span><span class="lang-en"><b>Cloud System:</b> Secure access to branches anywhere.</span></li>
                             </ul>
                         </div>
                     </div>
@@ -364,103 +623,172 @@
         </div>
     </div>
 
-    <!-- 6. مودال البرمجيات المخصصة Custom Tech -->
+    <!-- 6. modalCustom -->
     <div class="modal fade" id="modalCustom" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header"><h5>الحلول والبرمجيات الخاصة والمخصصة</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header bg-primary">
+                    <h5><span class="lang-ar">البرمجيات المخصصة</span><span class="lang-en">Custom Software Solutions</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <ul>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>تحليل المتطلبات:</b> دراسة شاملة لفكرة عملك لتصميم نظام يطابق سير العمل الفعلي لشركتك.</span></li>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>تطبيقات ومواقع الويب:</b> بناء وتطوير منصات ويب سريعة وقابلة للتوسع بأحدث التقنيات البرمجية.</span></li>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>واجهات استخدام مميزة UI/UX:</b> تصميم واجهات سهلة وبسيطة تضمن كفاءة الاستخدام وسرعة تدريب الموظفين.</span></li>
-                        <li><i class="fas fa-check-circle text-primary"></i> <span><b>تكامل الأنظمة البرمجية API:</b> ربط الأنظمة الجديدة مع أي خدمات دفع إلكتروني أو أنظمة خارجية تعمل بها بالفعل.</span></li>
+                        <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>تحليل المتطلبات:</b> دراسة وتحويل فكرتك لمنطق برمجي.</span><span class="lang-en"><b>Requirements Analysis:</b> Turning your idea into logic.</span></li>
+                        <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>بناء الأنظمة:</b> تطبيقات ويب متقدمة تواكب احتياجك.</span><span class="lang-en"><b>System Building:</b> Advanced web apps tailored to you.</span></li>
+                        <li><i class="fas fa-check-circle text-primary"></i> <span class="lang-ar"><b>ربط API:</b> التكامل مع بوابات الدفع الإلكتروني.</span><span class="lang-en"><b>API Integrations:</b> Seamless payment gateway connections.</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========================================================================= -->
+    <!-- 7. modalWebDev -->
+    <div class="modal fade" id="modalWebDev" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5><span class="lang-ar">برمجة مواقع الشركات</span><span class="lang-en">Corporate Web Development</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <ul>
+                        <li><i class="fas fa-desktop text-primary"></i> <span class="lang-ar"><b>تصميم متجاوب:</b> موقع يعمل بكفاءة على جميع الشاشات.</span><span class="lang-en"><b>Responsive Design:</b> Works perfectly on all screen sizes.</span></li>
+                        <li><i class="fas fa-search text-primary"></i> <span class="lang-ar"><b>تهيئة لمحركات البحث (SEO):</b> تصدر نتائج جوجل.</span><span class="lang-en"><b>SEO Optimized:</b> Built to rank on Google search results.</span></li>
+                        <li><i class="fas fa-cogs text-primary"></i> <span class="lang-ar"><b>لوحة تحكم مرنة:</b> لتعديل محتوى موقعك بسهولة.</span><span class="lang-en"><b>Flexible Dashboard:</b> Edit your website content easily.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- 8. modalServers -->
+    <div class="modal fade" id="modalServers" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: var(--logo-blue-light);">
+                    <h5 style="color: var(--dark-bg);"><span class="lang-ar">سيرفرات واستضافة</span><span class="lang-en">Servers & Hosting Setup</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal" style="filter: none;"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <ul>
+                        <li><i class="fas fa-server text-primary"></i> <span class="lang-ar"><b>VPS & Dedicated:</b> خوادم خاصة تناسب حجم زياراتك.</span><span class="lang-en"><b>VPS & Dedicated:</b> Servers scaled to your traffic.</span></li>
+                        <li><i class="fas fa-shield-virus text-primary"></i> <span class="lang-ar"><b>حماية متقدمة:</b> جدران نارية وحماية ضد الهجمات.</span><span class="lang-en"><b>Advanced Security:</b> Firewalls and DDoS protection.</span></li>
+                        <li><i class="fas fa-sync text-primary"></i> <span class="lang-ar"><b>نسخ احتياطي (Backups):</b> نسخ دوري لضمان بياناتك.</span><span class="lang-en"><b>Automated Backups:</b> Periodic data backups for safety.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. modalDomains -->
+    <div class="modal fade" id="modalDomains" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <h5><span class="lang-ar">النطاقات والإيميلات الرسمية</span><span class="lang-en">Domains & Official Emails</span></h5>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <ul>
+                        <li><i class="fas fa-globe text-secondary"></i> <span class="lang-ar"><b>حجز النطاقات:</b> اختيار وحجز اسم مميز لشركتك.</span><span class="lang-en"><b>Domain Booking:</b> Choose a unique domain for your company.</span></li>
+                        <li><i class="fas fa-envelope-open-text text-secondary"></i> <span class="lang-ar"><b>إيميل رسمي للأعمال:</b> إيميل باسم شركتك الاحترافي.</span><span class="lang-en"><b>Business Email:</b> Professional email utilizing your brand name.</span></li>
+                        <li><i class="fas fa-mail-bulk text-secondary"></i> <span class="lang-ar"><b>إدارة البريد:</b> مساحات تخزين ضخمة محمية.</span><span class="lang-en"><b>Mail Management:</b> Large storage with spam protection.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio-section">
         <div class="container position-relative">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">شركاء النجاح وآراء عملائنا</h2>
-                <p class="text-muted">استخدم الأسهم للتنقل بين قصص النجاح المختلفة</p>
+                <h2 class="fw-bold"><span class="lang-ar">شركاء النجاح</span><span class="lang-en">Our Success Partners</span></h2>
+                <p class="text-muted"><span class="lang-ar">انضم لمئات الشركات والكيانات التي اعتمدت على أنظمتنا</span><span class="lang-en">Join hundreds of entities that relied on our systems</span></p>
             </div>
 
-            <div id="doctorQuotesSlider" class="carousel slide" data-bs-interval="false" data-aos="zoom-in">
+            <div id="doctorQuotesSlider" class="carousel slide" data-bs-interval="4000" data-aos="zoom-in">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div class="testimonial-card shadow-sm">
-                            <div class="doctor-icon-large shadow-sm"><i class="fas fa-hospital-user"></i></div>
-                            <h4 class="fw-bold text-dark mb-3">مركز تكنو للعيون</h4>
-                            <p class="lead text-muted mb-4">"نظام i-Care Plus ساعدنا بشكل كبير في تنظيم مواعيد العمليات وربط المعمل بالملفات الطبية للمرضى بكل سلاسة ودقة عالية."</p>
-                            <hr class="w-25 mx-0 border-primary border-2 opacity-100">
-                            <h6 class="mb-0 fw-bold text-primary">د. خالد الرفاعي</h6>
-                            <small class="text-secondary">المدير الطبي للمركز</small>
+                        <div class="testimonial-card shadow-sm text-center">
+                            <div class="doctor-icon-large shadow-sm mx-auto"><i class="fas fa-hospital-user"></i></div>
+                            <h4 class="fw-bold text-dark mb-3"><span class="lang-ar">مركز تكنو للعيون</span><span class="lang-en">Techno Eye Center</span></h4>
+                            <p class="lead text-muted mb-4">
+                                <span class="lang-ar">"نظام i-Care Plus ساعدنا بشكل كبير في تنظيم مواعيد العمليات وربط المعمل بالملفات الطبية للمرضى بدقة عالية."</span>
+                                <span class="lang-en">"i-Care Plus system vastly helped us organize operation schedules and accurately link labs with patient EMRs."</span>
+                            </p>
+                            <hr class="w-25 mx-auto border-primary border-2 opacity-100">
+                            <h6 class="mb-0 fw-bold text-primary"><span class="lang-ar">د. خالد الرفاعي</span><span class="lang-en">Dr. Khalid Al-Rifai</span></h6>
+                            <small class="text-secondary"><span class="lang-ar">المدير الطبي</span><span class="lang-en">Medical Director</span></small>
                         </div>
                     </div>
-
                     <div class="carousel-item">
-                        <div class="testimonial-card shadow-sm">
-                            <div class="doctor-icon-large shadow-sm"><i class="fas fa-stethoscope"></i></div>
-                            <h4 class="fw-bold text-dark mb-3">عيادات نيو لايف</h4>
-                            <p class="lead text-muted mb-4">"الروشتة الإلكترونية في i-Care احترافية جداً، والدعم الفني متواجد دائماً لحل أي استفسار في أسرع وقت ممكن."</p>
-                            <hr class="w-25 mx-0 border-primary border-2 opacity-100">
-                            <h6 class="mb-0 fw-bold text-primary">د. نورا الشريف</h6>
-                            <small class="text-secondary">استشاري الأمراض الجلدية</small>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="testimonial-card shadow-sm">
-                            <div class="doctor-icon-large shadow-sm"><i class="fas fa-clinic-medical"></i></div>
-                            <h4 class="fw-bold text-dark mb-3">مجمع الأمل الطبي والخدمي</h4>
-                            <p class="lead text-muted mb-4">"لقد وفرت لنا Link Tech حلولاً متكاملة لإدارة الحسابات والمخازن الطبية، مما قلل من نسبة الأخطاء البشرية بشكل ملحوظ."</p>
-                            <hr class="w-25 mx-0 border-primary border-2 opacity-100">
-                            <h6 class="mb-0 fw-bold text-primary">أ/ محمد جلال</h6>
-                            <small class="text-secondary">المدير الإداري</small>
+                        <div class="testimonial-card shadow-sm text-center">
+                            <div class="doctor-icon-large shadow-sm mx-auto"><i class="fas fa-building"></i></div>
+                            <h4 class="fw-bold text-dark mb-3"><span class="lang-ar">مجموعة الرواد</span><span class="lang-en">Al-Rowad Group</span></h4>
+                            <p class="lead text-muted mb-4">
+                                <span class="lang-ar">"تطبيق نظام ERP من Link-ATS كان نقطة تحول لنا، الآن أراقب أرباح فروع الشركة الثلاثة وحركة المخازن من موبايلي."</span>
+                                <span class="lang-en">"Implementing the ERP system was a turning point. Now I can monitor all 3 branches' profits and inventory from my phone."</span>
+                            </p>
+                            <hr class="w-25 mx-auto border-primary border-2 opacity-100">
+                            <h6 class="mb-0 fw-bold text-primary"><span class="lang-ar">م. أحمد سامي</span><span class="lang-en">Eng. Ahmed Sami</span></h6>
+                            <small class="text-secondary"><span class="lang-ar">المدير التنفيذي</span><span class="lang-en">CEO</span></small>
                         </div>
                     </div>
                 </div>
 
                 <button class="carousel-control-prev" type="button" data-bs-target="#doctorQuotesSlider" data-bs-slide="prev">
-                    <i class="fas fa-chevron-right fs-4"></i> </button>
+                    <i class="fas fa-chevron-right fs-4"></i>
+                </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#doctorQuotesSlider" data-bs-slide="next">
-                    <i class="fas fa-chevron-left fs-4"></i> </button>
+                    <i class="fas fa-chevron-left fs-4"></i>
+                </button>
             </div>
         </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="contact-area">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold text-white">تواصل معنا الآن</h2>
-                <p class="text-gray">فريقنا جاهز للرد على استفساراتك في أي وقت</p>
+                <h2 class="fw-bold text-white"><span class="lang-ar">ابدأ قصة نجاحك الرقمية معنا</span><span class="lang-en">Start Your Digital Success Story</span></h2>
+                <p class="text-white-50"><span class="lang-ar">فريق الخبراء لدينا جاهز لتقديم استشارة تقنية مجانية</span><span class="lang-en">Our experts are ready to provide a free tech consultation</span></p>
             </div>
             <div class="row g-5">
                 <div class="col-lg-5">
-                    <div class="contact-info-card text-end">
-                        <h4 class="fw-bold mb-4 text-white">بيانات الاتصال </h4>
-                        <div class="contact-info-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <div><p class="mb-0 small text-gray">رقم الهاتف</p><h5 class="mb-0 fw-bold">01118387065</h5></div>
+                    <div class="contact-info-card text-lg-end text-center">
+                        <h4 class="fw-bold mb-4 text-white"><span class="lang-ar">بيانات الاتصال الدائم</span><span class="lang-en">Contact Information</span></h4>
+                        <div class="contact-info-item justify-content-center justify-content-lg-start flex-row-reverse">
+                            <i class="fas fa-phone-alt mx-3"></i>
+                            <div><p class="mb-0 small text-white-50"><span class="lang-ar">مبيعات واستفسارات</span><span class="lang-en">Sales & Inquiries</span></p><h5 class="mb-0 fw-bold text-white" dir="ltr">0111 838 7065</h5></div>
                         </div>
-                        <div class="contact-info-item">
-                            <i class="fas fa-envelope"></i>
-                            <div><p class="mb-0 small text-gray">البريد الإلكتروني</p><h5 class="mb-0 fw-bold">info@lin-ats.com</h5></div>
+                        <div class="contact-info-item justify-content-center justify-content-lg-start flex-row-reverse">
+                            <i class="fas fa-envelope mx-3"></i>
+                            <div><p class="mb-0 small text-white-50"><span class="lang-ar">البريد الإلكتروني</span><span class="lang-en">Official Email</span></p><h5 class="mb-0 fw-bold text-white">info@lin-ats.com</h5></div>
+                        </div>
+                        <div class="contact-info-item justify-content-center justify-content-lg-start flex-row-reverse">
+                            <i class="fas fa-headset mx-3"></i>
+                            <div><p class="mb-0 small text-white-50"><span class="lang-ar">دعم فني متواصل</span><span class="lang-en">Technical Support</span></p><h5 class="mb-0 fw-bold text-white">24/7</h5></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <form class="p-4" style="background: rgba(255,255,255,0.03); border-radius: 20px;">
+                    <form class="p-4 shadow-lg" style="background: rgba(255,255,255,0.05); border-radius: 20px; backdrop-filter: blur(5px);">
+                        <h4 class="text-white mb-4"><span class="lang-ar">أرسل طلبك الآن</span><span class="lang-en">Send Your Request</span></h4>
                         <div class="row g-3">
-                            <div class="col-md-6"><input type="text" class="form-control" placeholder="الاسم"></div>
-                            <div class="col-md-6"><input type="tel" class="form-control" placeholder="رقم الموبايل"></div>
-                            <div class="col-12"><textarea class="form-control" rows="5" placeholder="رسالتك"></textarea></div>
-                            <div class="col-12 mt-4"><button class="btn btn-primary w-100 py-3 rounded-pill fw-bold text-white">إرسال الطلب</button></div>
+                            <div class="col-md-6"><input type="text" class="form-control i18n-input" data-ar="الاسم الكريم" data-en="Full Name" placeholder="الاسم الكريم"></div>
+                            <div class="col-md-6"><input type="tel" class="form-control i18n-input" data-ar="رقم الموبايل / واتساب" data-en="Phone / WhatsApp" placeholder="رقم الموبايل / واتساب"></div>
+                            <div class="col-12">
+                                <select class="form-control" style="background-color: rgba(255,255,255,0.08);">
+                                    <option value="" disabled selected style="color: black;" class="i18n-option" data-ar="الخدمة المطلوبة..." data-en="Required Service...">الخدمة المطلوبة...</option>
+                                    <option style="color: black;" class="i18n-option" data-ar="نظام طبي (عيادة/مستشفى)" data-en="Medical System">نظام طبي (عيادة/مستشفى)</option>
+                                    <option style="color: black;" class="i18n-option" data-ar="نظام ERP للشركات" data-en="ERP System">نظام ERP للشركات</option>
+                                    <option style="color: black;" class="i18n-option" data-ar="برمجة موقع إلكتروني" data-en="Web Development">برمجة موقع إلكتروني</option>
+                                    <option style="color: black;" class="i18n-option" data-ar="استضافة وسيرفرات" data-en="Hosting & Servers">استضافة وسيرفرات</option>
+                                </select>
+                            </div>
+                            <div class="col-12"><textarea class="form-control i18n-input" rows="4" data-ar="تفاصيل رسالتك أو مشروعك..." data-en="Message or Project Details..." placeholder="تفاصيل رسالتك أو مشروعك..."></textarea></div>
+                            <div class="col-12 mt-4"><button type="button" class="btn btn-primary w-100 py-3 rounded-pill fw-bold text-white fs-5 transition"><span class="lang-ar">إرسال الطلب للاستشارة</span><span class="lang-en">Submit Request</span></button></div>
                         </div>
                     </form>
                 </div>
@@ -473,25 +801,47 @@
     <script>
         AOS.init({ duration: 800, once: true });
 
-        // سكريبت الحماية المتقدم
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('selectstart', event => event.preventDefault());
-        document.addEventListener('keydown', event => {
-            if (event.ctrlKey && (event.key === 'c' || event.key === 'C' || event.key === 'u' || event.key === 'U' || event.key === 's' || event.key === 'S' || event.key === 'a' || event.key === 'A')) {
-                event.preventDefault();
+        // --- Language Toggle Logic ---
+        function setLanguage(lang) {
+            const html = document.documentElement;
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            
+            // Switch Bootstrap CSS version (RTL vs LTR)
+            const bsLink = document.getElementById('bootstrap-css');
+            bsLink.href = lang === 'ar' 
+                ? 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css' 
+                : 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css';
+                
+            // Update Inputs Placeholders & Options
+            document.querySelectorAll('.i18n-input').forEach(el => {
+                el.placeholder = el.getAttribute(`data-${lang}`);
+            });
+            document.querySelectorAll('.i18n-option').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        function toggleLang() {
+            const currentLang = document.documentElement.getAttribute('lang');
+            setLanguage(currentLang === 'ar' ? 'en' : 'ar');
+        }
+
+        // Apply saved language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'ar';
+            if(savedLang === 'en') {
+                setLanguage('en');
             }
         });
+
+        // --- Security Script ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
         document.addEventListener("keydown", function (e) {
-            if (e.key === "F12") {
-                e.preventDefault();
-            }
-            if (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "i")) {
-                e.preventDefault();
-            }
-            if (e.ctrlKey && e.shiftKey && (e.key === "J" || e.key === "j")) {
-                e.preventDefault();
-            }
-            if (e.ctrlKey && e.shiftKey && (e.key === "C" || e.key === "c")) {
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c")) || (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'c' || e.key === 'C'))) {
                 e.preventDefault();
             }
         });
